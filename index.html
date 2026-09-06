@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Climbing System – techniki linowe, prace na wysokości, prace w przestrzeniach zamkniętych, ratownictwo wysokościowe, nadzór BHP i usługi przemysłowe." />
+  <meta name="theme-color" content="#0d0f12" />
+  <title>Climbing System | Techniki linowe i ratownictwo wysokościowe</title>
+
+  <style>
+    :root{
+      --bg:#0b0d10;
+      --bg-2:#101318;
+      --panel:#151920;
+      --panel-2:#1a1f27;
+      --text:#f4f6f8;
+      --muted:#aeb6c1;
+      --line:rgba(255,255,255,.10);
+      --red:#e6383b;
+      --red-2:#ff5659;
+      --white:#ffffff;
+      --shadow:0 24px 70px rgba(0,0,0,.34);
+      --radius:22px;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 82% 4%, rgba(230,56,59,.11), transparent 28%),
+        linear-gradient(180deg,#090b0d 0%,#0d1014 48%,#090b0d 100%);
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height:1.55;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button{font:inherit}
+    section{scroll-margin-top:88px}
+
+    .container{
+      width:min(var(--max), calc(100% - 40px));
+      margin:0 auto;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:#d9dde3;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.78rem;
+      font-weight:800;
+    }
+    .eyebrow::before{
+      content:"";
+      width:30px;height:2px;background:var(--red);
+      box-shadow:14px 0 0 rgba(230,56,59,.35);
+    }
+
+    .section-head{
+      display:grid;
+      grid-template-columns:1fr minmax(280px,520px);
+      gap:50px;
+      align-items:end;
+      margin-bottom:42px;
+    }
+    .section-head h2{
+      margin:12px 0 0;
+      font-size:clamp(2rem,4vw,3.55rem);
+      line-height:1.02;
+      letter-spacing:-.045em;
+      max-width:760px;
+    }
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      font-size:1.04rem;
+    }
+
+    /* NAV */
+    .nav-wrap{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:50;
+      border-bottom:1px solid transparent;
+      transition:.25s ease;
+    }
+    .nav-wrap.scrolled{
+      background:rgba(8,10,13,.86);
+      backdrop-filter:blur(18px);
+      border-color:var(--line);
+    }
+    .nav{
+      min-height:82px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:max-content;
+    }
+    .brand img{
+      width:188px;
+      height:auto;
+      filter:brightness(0) invert(1);
+    }
+    .brand-fallback{
+      display:none;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:-.03em;
+      font-size:1rem;
+      text-transform:uppercase;
+    }
+    .brand-mark{
+      width:30px;height:30px;
+      position:relative;
+      transform:rotate(45deg);
+      border:6px solid var(--white);
+      border-left-color:var(--red);
+      border-bottom-color:var(--red);
+    }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      color:#d7dbe0;
+      font-size:.93rem;
+      font-weight:650;
+    }
+    .nav-links a{transition:.2s ease}
+    .nav-links a:hover{color:var(--white)}
+    .nav-cta{
+      padding:12px 17px;
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+    }
+    .menu-btn{
+      display:none;
+      width:44px;height:44px;
+      border:1px solid var(--line);
+      color:white;
+      background:#12151a;
+      border-radius:12px;
+      cursor:pointer;
+    }
+
+    /* HERO */
+    .hero{
+      position:relative;
+      min-height:820px;
+      display:grid;
+      align-items:center;
+      overflow:hidden;
+      padding:150px 0 90px;
+      border-bottom:1px solid var(--line);
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      width:760px;height:760px;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:50%;
+      right:-210px;top:60px;
+      box-shadow:
+        0 0 0 80px rgba(255,255,255,.018),
+        0 0 0 160px rgba(255,255,255,.012);
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      width:2px;height:720px;
+      background:linear-gradient(180deg,transparent,rgba(230,56,59,.9),transparent);
+      transform:rotate(25deg);
+      right:28%;top:-100px;
+      opacity:.55;
+    }
+    .industrial-grid{
+      position:absolute;
+      inset:0;
+      opacity:.14;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.055) 1px, transparent 1px);
+      background-size:74px 74px;
+      mask-image:linear-gradient(to bottom,transparent 0%,black 18%,black 78%,transparent 100%);
+    }
+    .hero-layout{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns:minmax(0,1.15fr) minmax(310px,.55fr);
+      gap:70px;
+      align-items:center;
+    }
+    .hero h1{
+      margin:17px 0 24px;
+      font-size:clamp(3.4rem,7.2vw,7rem);
+      line-height:.91;
+      letter-spacing:-.065em;
+      max-width:900px;
+    }
+    .hero h1 span{color:var(--red)}
+    .hero-lead{
+      max-width:760px;
+      color:#c4cad2;
+      font-size:clamp(1.04rem,1.65vw,1.3rem);
+      margin:0;
+    }
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:13px;
+      margin-top:34px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-height:52px;
+      padding:0 21px;
+      border-radius:13px;
+      font-weight:800;
+      transition:.2s ease;
+      border:1px solid transparent;
+    }
+    .btn-primary{
+      background:var(--red);
+      color:white;
+      box-shadow:0 10px 30px rgba(230,56,59,.22);
+    }
+    .btn-primary:hover{background:var(--red-2);transform:translateY(-2px)}
+    .btn-secondary{
+      border-color:rgba(255,255,255,.18);
+      background:rgba(255,255,255,.035);
+    }
+    .btn-secondary:hover{background:rgba(255,255,255,.075)}
+    .hero-card{
+      position:relative;
+      background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025));
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:30px;
+      backdrop-filter:blur(18px);
+      overflow:hidden;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      width:160px;height:160px;
+      background:var(--red);
+      filter:blur(90px);
+      opacity:.16;
+      top:-40px;right:-40px;
+    }
+    .emergency-label{
+      color:#ffb5b7;
+      font-weight:800;
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+    }
+    .emergency-number{
+      display:block;
+      font-size:clamp(1.85rem,4vw,2.7rem);
+      line-height:1;
+      letter-spacing:-.04em;
+      font-weight:900;
+      margin:14px 0 12px;
+    }
+    .emergency-desc{color:var(--muted);font-size:.95rem;margin:0 0 20px}
+    .hero-list{
+      display:grid;
+      gap:0;
+      margin-top:18px;
+      border-top:1px solid var(--line);
+    }
+    .hero-list div{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding:17px 0;
+      border-bottom:1px solid var(--line);
+      color:#dce0e5;
+      font-weight:650;
+    }
+    .hero-list span:last-child{color:var(--red);font-weight:900}
+
+    /* PROOF STRIP */
+    .proof{
+      border-bottom:1px solid var(--line);
+      background:#0b0e12;
+    }
+    .proof-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+    }
+    .proof-item{
+      padding:25px 28px;
+      border-right:1px solid var(--line);
+    }
+    .proof-item:first-child{padding-left:0}
+    .proof-item:last-child{border-right:0}
+    .proof-item strong{
+      display:block;
+      margin-bottom:3px;
+      font-size:1rem;
+    }
+    .proof-item span{color:var(--muted);font-size:.88rem}
+
+    /* SERVICES */
+    .services{padding:110px 0}
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+    .card{
+      min-height:265px;
+      display:flex;
+      flex-direction:column;
+      padding:24px;
+      background:linear-gradient(180deg,#14181e,#101318);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      transition:.25s ease;
+    }
+    .card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(230,56,59,.45);
+      box-shadow:0 18px 50px rgba(0,0,0,.22);
+    }
+    .icon{
+      width:46px;height:46px;
+      display:grid;place-items:center;
+      margin-bottom:auto;
+      border:1px solid rgba(230,56,59,.26);
+      border-radius:14px;
+      background:rgba(230,56,59,.08);
+      color:#ff686b;
+    }
+    .icon svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8}
+    .card h3{margin:25px 0 8px;font-size:1.1rem;line-height:1.18}
+    .card p{margin:0;color:var(--muted);font-size:.91rem}
+
+    /* ABOUT */
+    .about{
+      padding:30px 0 110px;
+    }
+    .about-grid{
+      display:grid;
+      grid-template-columns:.82fr 1.18fr;
+      gap:60px;
+      align-items:start;
+    }
+    .about-aside{
+      position:sticky;
+      top:120px;
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:28px;
+    }
+    .about-aside h3{margin:0 0 10px;font-size:1.25rem}
+    .about-aside p{margin:0;color:var(--muted)}
+    .checks{
+      display:grid;
+      gap:12px;
+      margin-top:24px;
+    }
+    .check{
+      display:flex;gap:11px;align-items:flex-start;
+      color:#dce1e6;
+      font-size:.94rem;
+    }
+    .check b{
+      width:24px;height:24px;min-width:24px;
+      display:grid;place-items:center;
+      background:rgba(230,56,59,.11);
+      border:1px solid rgba(230,56,59,.25);
+      border-radius:50%;
+      color:#ff7a7c;
+    }
+    .about-copy h2{
+      margin:12px 0 23px;
+      font-size:clamp(2.2rem,4.6vw,4.3rem);
+      line-height:.98;
+      letter-spacing:-.05em;
+    }
+    .about-copy p{
+      color:#c1c8d0;
+      font-size:1.05rem;
+      max-width:760px;
+    }
+    .pill-row{
+      display:flex;flex-wrap:wrap;gap:9px;margin-top:28px;
+    }
+    .pill{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#11151a;
+      color:#d8dde3;
+      font-size:.85rem;
+      font-weight:700;
+    }
+
+    /* SAFETY */
+    .safety{
+      padding:110px 0;
+      background:
+        linear-gradient(115deg,rgba(230,56,59,.10),transparent 35%),
+        #111419;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+    }
+    .safety-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:70px;
+      align-items:center;
+    }
+    .safety h2{
+      font-size:clamp(2.3rem,5vw,4.8rem);
+      line-height:.95;
+      letter-spacing:-.055em;
+      margin:12px 0 24px;
+    }
+    .safety p{color:#c4cbd3;max-width:650px}
+    .safety-stack{display:grid;gap:12px}
+    .safety-row{
+      display:grid;
+      grid-template-columns:42px 1fr;
+      gap:15px;
+      padding:20px;
+      background:rgba(255,255,255,.035);
+      border:1px solid var(--line);
+      border-radius:16px;
+    }
+    .safety-row .num{
+      width:42px;height:42px;display:grid;place-items:center;
+      border-radius:12px;background:var(--red);font-weight:900
+    }
+    .safety-row h3{margin:0 0 4px;font-size:1rem}
+    .safety-row p{margin:0;font-size:.9rem;color:var(--muted)}
+
+    /* PROJECTS */
+    .projects{padding:110px 0}
+    .project-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:16px;
+    }
+    .project{
+      position:relative;
+      min-height:340px;
+      border:1px solid var(--line);
+      border-radius:26px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 75% 30%,rgba(230,56,59,.18),transparent 22%),
+        linear-gradient(145deg,#181c23,#0d1014);
+      padding:30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+    }
+    .project.large{min-height:560px}
+    .project::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(transparent 60%,rgba(0,0,0,.62)),
+        repeating-linear-gradient(100deg,transparent 0 80px,rgba(255,255,255,.018) 80px 82px);
+      pointer-events:none;
+    }
+    .project > *{position:relative;z-index:1}
+    .project-kicker{
+      display:inline-block;
+      width:max-content;
+      margin-bottom:9px;
+      color:#ff7779;
+      font-size:.77rem;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+    }
+    .project h3{font-size:clamp(1.45rem,3vw,2.35rem);line-height:1.04;margin:0 0 10px}
+    .project p{color:#c2c8d0;margin:0;max-width:610px}
+    .project-side{display:grid;gap:16px}
+
+    /* TRAINING */
+    .training{padding:0 0 110px}
+    .training-box{
+      display:grid;
+      grid-template-columns:1fr .82fr;
+      gap:55px;
+      padding:48px;
+      background:#f1f3f5;
+      color:#121417;
+      border-radius:30px;
+    }
+    .training h2{
+      margin:10px 0 18px;
+      font-size:clamp(2.2rem,4.3vw,4rem);
+      line-height:.96;
+      letter-spacing:-.05em;
+    }
+    .training p{color:#505962}
+    .training .eyebrow{color:#3d444b}
+    .training-list{display:grid;gap:12px}
+    .training-item{
+      padding:18px 20px;
+      border-radius:16px;
+      background:#fff;
+      border:1px solid #dfe3e7;
+      font-weight:750;
+    }
+
+    /* CONTACT */
+    .contact{
+      padding:110px 0 50px;
+      border-top:1px solid var(--line);
+    }
+    .contact-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:60px;
+    }
+    .contact h2{
+      font-size:clamp(2.8rem,6vw,5.7rem);
+      line-height:.9;
+      letter-spacing:-.06em;
+      margin:12px 0 24px;
+    }
+    .contact-lead{color:var(--muted);max-width:640px}
+    .contact-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+    .contact-card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:24px;
+      overflow:hidden;
+    }
+    .contact-row{
+      padding:21px 24px;
+      border-bottom:1px solid var(--line);
+    }
+    .contact-row:last-child{border-bottom:0}
+    .contact-row small{
+      display:block;color:#808995;text-transform:uppercase;letter-spacing:.12em;font-weight:800;margin-bottom:5px
+    }
+    .contact-row strong{font-size:1.05rem}
+    .emergency-strip{
+      margin-top:20px;
+      padding:18px 22px;
+      border:1px solid rgba(230,56,59,.35);
+      background:rgba(230,56,59,.08);
+      border-radius:16px;
+      color:#ffd8d9;
+    }
+    .emergency-strip strong{color:white}
+
+    footer{
+      padding:36px 0 45px;
+      color:#7f8994;
+      font-size:.86rem;
+    }
+    .footer-grid{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:30px;
+      border-top:1px solid var(--line);
+      padding-top:28px;
+    }
+    .footer-grid strong{color:#d8dde3}
+    .footer-right{text-align:right}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease, transform .65s ease}
+    .reveal.visible{opacity:1;transform:none}
+
+    @media (max-width:980px){
+      .nav-links{display:none}
+      .menu-btn{display:grid;place-items:center}
+      .nav-links.open{
+        display:flex;
+        position:absolute;
+        left:20px;right:20px;top:78px;
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+        padding:12px;
+        background:#101318;
+        border:1px solid var(--line);
+        border-radius:16px;
+        box-shadow:var(--shadow);
+      }
+      .nav-links.open a{padding:14px}
+      .hero-layout,.safety-grid,.contact-grid,.training-box{grid-template-columns:1fr}
+      .hero{min-height:auto}
+      .hero-card{max-width:560px}
+      .proof-grid{grid-template-columns:1fr 1fr}
+      .proof-item{border-bottom:1px solid var(--line)}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .about-grid{grid-template-columns:1fr}
+      .about-aside{position:relative;top:auto}
+      .project-grid{grid-template-columns:1fr}
+      .project.large{min-height:420px}
+      .training-box{gap:30px;padding:34px}
+    }
+
+    @media (max-width:680px){
+      .container{width:min(var(--max), calc(100% - 26px))}
+      .brand img{width:160px}
+      .hero{padding-top:125px}
+      .hero-layout{gap:36px}
+      .hero h1{font-size:clamp(3.2rem,17vw,5.2rem)}
+      .section-head{grid-template-columns:1fr;gap:18px}
+      .cards{grid-template-columns:1fr}
+      .proof-grid{grid-template-columns:1fr}
+      .proof-item{border-right:0;padding-left:0}
+      .services,.safety,.projects,.contact{padding:80px 0}
+      .about{padding-bottom:80px}
+      .training{padding-bottom:80px}
+      .project{min-height:300px}
+      .project.large{min-height:360px}
+      .training-box{padding:26px 20px;border-radius:22px}
+      .footer-grid{flex-direction:column}
+      .footer-right{text-align:left}
+      .hero::before{right:-480px}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="nav-wrap" id="topNav">
+    <div class="container nav">
+      <a href="#start" class="brand" aria-label="Climbing System – strona główna">
+        <img src="https://climbingsystem.pl/images/logo_cs.png"
+             alt="Climbing System – techniki linowe"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <span class="brand-fallback">
+          <span class="brand-mark"></span>
+          Climbing System
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Główna nawigacja">
+        <a href="#oferta">Oferta</a>
+        <a href="#o-firmie">O firmie</a>
+        <a href="#bezpieczenstwo">Bezpieczeństwo</a>
+        <a href="#realizacje">Realizacje</a>
+        <a href="#kontakt" class="nav-cta">Kontakt</a>
+      </nav>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Otwórz menu" aria-expanded="false">
+        ☰
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="start">
+      <div class="industrial-grid"></div>
+      <div class="container hero-layout">
+        <div>
+          <span class="eyebrow">Techniki linowe • Prace przemysłowe</span>
+          <h1>Pracujemy tam, gdzie kończy się <span>zwykły dostęp.</span></h1>
+          <p class="hero-lead">
+            Prace na wysokości, przestrzenie zamknięte, ratownictwo wysokościowe,
+            nadzór BHP oraz specjalistyczne usługi dla przemysłu.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="tel:+48668180155">☎ Zadzwoń 24/7</a>
+            <a class="btn btn-secondary" href="#oferta">Poznaj ofertę ↓</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Pogotowie alpinistyczne">
+          <div class="emergency-label">Pogotowie alpinistyczne</div>
+          <a class="emergency-number" href="tel:+48668180155">+48 668 180 155</a>
+          <p class="emergency-desc">
+            Numer alarmowy dla pilnych zgłoszeń związanych z pracami i ratownictwem wysokościowym.
+          </p>
+
+          <div class="hero-list">
+            <div><span>Prace na wysokości</span><span>01</span></div>
+            <div><span>Przestrzenie zamknięte</span><span>02</span></div>
+            <div><span>Ratownictwo i BHP</span><span>03</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="proof">
+      <div class="container proof-grid">
+        <div class="proof-item">
+          <strong>Techniki linowe</strong>
+          <span>Dostęp do trudno dostępnych miejsc</span>
+        </div>
+        <div class="proof-item">
+          <strong>Przemysł</strong>
+          <span>Hale, kominy, maszty, konstrukcje</span>
+        </div>
+        <div class="proof-item">
+          <strong>Bezpieczeństwo</strong>
+          <span>Ratownictwo, asekuracja i nadzór BHP</span>
+        </div>
+        <div class="proof-item">
+          <strong>Wsparcie techniczne</strong>
+          <span>Ekspertyzy, badania i dokumentacja</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="oferta">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Zakres usług</span>
+            <h2>Kompleksowe wsparcie prac wysokościowych i przemysłowych.</h2>
+          </div>
+          <p>
+            Od dostępu linowego i montażu, przez czyszczenie i ekspertyzy,
+            aż po zabezpieczenie inwestycji i ratownictwo.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24"><path d="M7 21 17 3M5 7h14M4 13h13M3 19h11"/></svg>
+            </div>
+            <h3>Prace na wysokości</h3>
+            <p>Montaże, naprawy, konserwacja, czyszczenie, zabezpieczenia i prace techniczne w dostępie linowym.</p>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12h8M12 8v8"/></svg>
+            </div>
+            <h3>Przestrzenie zamknięte</h3>
+            <p>Silosy, zbiorniki i komory przemysłowe: czyszczenie, serwis, uszczelnianie, modernizacje i ekspertyzy.</p>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg>
+            </div>
+            <h3>Ratownictwo wysokościowe</h3>
+            <p>Zabezpieczenie prac szczególnie niebezpiecznych, zespoły ratownicze, koncepcje ratunkowe i konsultacje.</p>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7l-8-4Z"/><path d="m9 12 2 2 4-5"/></svg>
+            </div>
+            <h3>Nadzór BHP</h3>
+            <p>Koordynacja prac na wysokości, w przestrzeniach zamkniętych i strefach EX oraz dokumentacja dla inwestycji.</p>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24"><path d="M4 19h16M6 19V8l6-4 6 4v11M9 10h6M9 14h6"/></svg>
+            </div>
+            <h3>Konstrukcje stalowe</h3>
+            <p>Montaż i demontaż, wzmacnianie konstrukcji, zabezpieczenia antykorozyjne, czyszczenie i przeglądy.</p>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24"><path d="M9 21 10 3h4l1 18M7 21h10M10 7h4M9.5 12h5"/></svg>
+            </div>
+            <h3>Kominy i maszty</h3>
+            <p>Modernizacje, przeglądy, naprawy, instalacje, zabezpieczenia powierzchni oraz badania stanu technicznego.</p>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V8h14v12M8 11h3M13 11h3M8 15h3M13 15h3"/></svg>
+            </div>
+            <h3>Hale i obiekty przemysłowe</h3>
+            <p>Naprawy dachów i elewacji, rynny, instalacje odgromowe, czyszczenie przemysłowe oraz systemy zabezpieczeń.</p>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24"><path d="M12 21V10M8 21h8M6 10c0-3 2-5 6-7 4 2 6 4 6 7-2 2-4 3-6 3s-4-1-6-3Z"/></svg>
+            </div>
+            <h3>Arborystyka</h3>
+            <p>Wycinka i pielęgnacja drzew w trudno dostępnych miejscach oraz przy liniach energetycznych, ekspertyzy dendrologiczne.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="o-firmie">
+      <div class="container about-grid">
+        <aside class="about-aside reveal">
+          <h3>Indywidualne podejście do zlecenia</h3>
+          <p>Dobór techniki, zabezpieczeń, sprzętu i sposobu organizacji pracy do realnych warunków obiektu.</p>
+
+          <div class="checks">
+            <div class="check"><b>✓</b><span>Prace wysokościowe i przemysłowe</span></div>
+            <div class="check"><b>✓</b><span>Ekspertyzy i badania techniczne</span></div>
+            <div class="check"><b>✓</b><span>Sprzęt ochrony indywidualnej i asekuracja</span></div>
+            <div class="check"><b>✓</b><span>Dokumentacja i planowanie bezpiecznej pracy</span></div>
+          </div>
+        </aside>
+
+        <div class="about-copy reveal">
+          <span class="eyebrow">O firmie</span>
+          <h2>Pasja do wspinaczki połączona z doświadczeniem przemysłowym.</h2>
+          <p>
+            Climbing System powstał z połączenia doświadczenia zawodowego oraz pasji do wspinaczki,
+            alpinizmu i technik linowych. Firma realizuje zadania wymagające pracy w miejscach trudno
+            dostępnych, przygotowując sposób wykonania indywidualnie do charakteru każdego zlecenia.
+          </p>
+          <p>
+            Szczególny nacisk kładziony jest na organizację pracy, właściwy dobór zabezpieczeń,
+            przygotowanie techniczne i bezpieczeństwo personelu. Zakres obejmuje zarówno typowe
+            prace wysokościowe, jak i zadania w przestrzeniach zamkniętych oraz na obiektach przemysłowych.
+          </p>
+
+          <div class="pill-row">
+            <span class="pill">Techniki linowe</span>
+            <span class="pill">Ratownictwo</span>
+            <span class="pill">Przestrzenie zamknięte</span>
+            <span class="pill">Strefy EX</span>
+            <span class="pill">BHP</span>
+            <span class="pill">Ekspertyzy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="safety" id="bezpieczenstwo">
+      <div class="container safety-grid">
+        <div class="reveal">
+          <span class="eyebrow">Bezpieczeństwo</span>
+          <h2>Najpierw plan. Potem wejście w strefę pracy.</h2>
+          <p>
+            Prace na wysokości i w przestrzeniach zamkniętych wymagają przygotowania,
+            przewidywania zagrożeń oraz jasno określonego sposobu ewakuacji i ratownictwa.
+          </p>
+          <p>
+            Climbing System oferuje zabezpieczenie inwestycji przez ratowników wysokościowych,
+            wsparcie medyczne, koordynację prac oraz przygotowanie dokumentacji BHP.
+          </p>
+        </div>
+
+        <div class="safety-stack">
+          <div class="safety-row reveal">
+            <div class="num">01</div>
+            <div>
+              <h3>Ocena zadania i zagrożeń</h3>
+              <p>Analiza warunków pracy, dojścia, asekuracji, przestrzeni zamkniętych i stref EX.</p>
+            </div>
+          </div>
+          <div class="safety-row reveal">
+            <div class="num">02</div>
+            <div>
+              <h3>Dokumentacja</h3>
+              <p>Instrukcje bezpiecznego wykonania robót, koncepcje ratunkowe, oceny ryzyka i dokumentacja do BIOZ.</p>
+            </div>
+          </div>
+          <div class="safety-row reveal">
+            <div class="num">03</div>
+            <div>
+              <h3>Zabezpieczenie inwestycji</h3>
+              <p>Ratownicy wysokościowi, ratownicy medyczni oraz wyposażenie do pracy i ratownictwa.</p>
+            </div>
+          </div>
+          <div class="safety-row reveal">
+            <div class="num">04</div>
+            <div>
+              <h3>Nadzór i szkolenie</h3>
+              <p>Koordynacja prac szczególnie niebezpiecznych oraz instruktaże dla zespołów wykonawczych.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="realizacje">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">Doświadczenie</span>
+            <h2>Realizacje w środowisku przemysłowym i na obiektach wymagających.</h2>
+          </div>
+          <p>
+            Na dotychczasowej stronie firma wskazuje m.in. udział w zabezpieczeniu dużych inwestycji
+            przemysłowych oraz prace przy obiektach specjalnych.
+          </p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project large reveal">
+            <span class="project-kicker">Ratownictwo • energetyka</span>
+            <h3>Budowa bloków 5 i 6 Elektrowni Opole</h3>
+            <p>
+              Zabezpieczenie inwestycji przez zespoły ratownictwa wysokościowego podczas realizacji
+              prac prowadzonych przez tysiące pracowników.
+            </p>
+          </article>
+
+          <div class="project-side">
+            <article class="project reveal">
+              <span class="project-kicker">Przemysł • offshore</span>
+              <h3>Platforma „EURO RIG”</h3>
+              <p>Zabezpieczenie specjalistycznych prac dla projektu platformy wiertniczej.</p>
+            </article>
+
+            <article class="project reveal">
+              <span class="project-kicker">Obiekt zabytkowy</span>
+              <h3>Zamek w Niemodlinie</h3>
+              <p>Prace remontowe i zabezpieczenie fragmentów poszycia dachowego obiektu.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="training" id="szkolenia">
+      <div class="container">
+        <div class="training-box reveal">
+          <div>
+            <span class="eyebrow">Szkolenia i instruktaże</span>
+            <h2>Bezpieczna praca zaczyna się przed wejściem na wysokość.</h2>
+            <p>
+              Programy szkoleniowe mogą być dopasowane do specyfiki zakładu, rodzaju wykonywanych prac,
+              stosowanych systemów asekuracyjnych oraz realnych zagrożeń na obiekcie.
+            </p>
+            <a class="btn btn-primary" href="mailto:biuro@climbingsystem.pl?subject=Zapytanie%20o%20szkolenie">Zapytaj o szkolenie</a>
+          </div>
+
+          <div class="training-list">
+            <div class="training-item">Prace na wysokości</div>
+            <div class="training-item">Przestrzenie zamknięte</div>
+            <div class="training-item">Prewencja wypadkowa</div>
+            <div class="training-item">Sprzęt ochrony indywidualnej</div>
+            <div class="training-item">Ewakuacja i ratownictwo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="kontakt">
+      <div class="container contact-grid">
+        <div class="reveal">
+          <span class="eyebrow">Kontakt</span>
+          <h2>Porozmawiajmy o zleceniu.</h2>
+          <p class="contact-lead">
+            Opisz obiekt, zakres prac i najważniejsze ograniczenia. W przypadku pilnego zgłoszenia
+            skorzystaj z numeru pogotowia alpinistycznego.
+          </p>
+
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="tel:+48668180155">+48 668 180 155</a>
+            <a class="btn btn-secondary" href="mailto:biuro@climbingsystem.pl">biuro@climbingsystem.pl</a>
+          </div>
+
+          <div class="emergency-strip">
+            <strong>Pogotowie alpinistyczne 24/7:</strong> +48 668 180 155
+          </div>
+        </div>
+
+        <div class="contact-card reveal">
+          <div class="contact-row">
+            <small>Firma</small>
+            <strong>CLIMBING SYSTEM Sp. z o.o.</strong>
+          </div>
+          <div class="contact-row">
+            <small>Adres</small>
+            <strong>Magnuszowice 38, 49-156 Gracze</strong>
+          </div>
+          <div class="contact-row">
+            <small>E-mail</small>
+            <strong><a href="mailto:biuro@climbingsystem.pl">biuro@climbingsystem.pl</a></strong>
+          </div>
+          <div class="contact-row">
+            <small>Telefon</small>
+            <strong><a href="tel:+48668180155">+48 668 180 155</a></strong>
+          </div>
+          <div class="contact-row">
+            <small>Dane rejestrowe</small>
+            <strong>KRS 0000873044 • NIP 9910536759 • REGON 387672389</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong>CLIMBING SYSTEM</strong><br>
+        techniki linowe • ratownictwo • prace przemysłowe
+      </div>
+      <div class="footer-right">
+        © <span id="year"></span> Climbing System. Wszelkie prawa zastrzeżone.<br>
+        <a href="#start">Wróć na górę ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('topNav');
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menuBtn.textContent = open ? '×' : '☰';
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.textContent = '☰';
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
